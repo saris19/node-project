@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Person from '../components/Person';
+import Person from './Person';
 
 describe('Person Component', () => {
   it('debe mostrar la información de la persona', () => {
