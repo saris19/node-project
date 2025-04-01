@@ -12,12 +12,12 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        bat 'npm install'
+        bat 'npm install --legacy-peer-deps'
       }
     }
     stage('Run tests') {
       steps {
-        bat 'npm test'
+        bat 'npm test -- --watchAll=false'
       }
     }
   }
