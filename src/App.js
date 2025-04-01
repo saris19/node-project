@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
-import Person from './Person';
-import SearchForm from './SearchForm';
+import Person from './components/Person';
+import SearchForm from './components/SearchForm';
 import './App.css';
 import axios from 'axios';
-import VisualizarTiempos from './VisualizarTiempos';
+import VisualizarTiempos from './components/VisualizarTiempos';
 
 function App() {
   // Estados
