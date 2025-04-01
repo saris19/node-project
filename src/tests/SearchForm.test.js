@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import SearchForm from '../components/SearchForm';
 
 describe('SearchForm Component', () => {
-  it('debe renderizar el select y el input', () => {a
+  it('debe renderizar el select y el input', () => {
     render(<SearchForm handleGender={() => {}} handleCountry={() => {}} country="" />);
 
     const select = screen.getByRole('combobox');
