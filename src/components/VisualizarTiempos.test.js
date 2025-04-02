@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import VisualizarTiempos from '../components/VisualizarTiempos';
+import VisualizarTiempos from './VisualizarTiempos';
 
 describe('VisualizarTiempos Component', () => {
   it('debe mostrar los tiempos de Axios y Fetch', () => {

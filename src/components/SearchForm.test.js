@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import SearchForm from '../components/SearchForm';
+import SearchForm from './SearchForm';
 
 describe('SearchForm Component', () => {
   it('debe renderizar el select y el input', () => {
