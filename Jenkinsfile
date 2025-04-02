@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Tool Install') {
       steps {
-        tool name: 'NodeJS', type: 'nodejs'
+       tool name: 'Node 20', type: 'nodejs'
       }
     }
     stage('Clean workspace') {
