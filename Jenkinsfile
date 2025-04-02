@@ -22,10 +22,10 @@ pipeline {
         bat 'npm install --legacy-peer-deps'
       }
     }
-    stage('Run tests') {
-      steps {
-        bat 'npm test -- --watchAll=false'
-      }
-    }
+stage('Run tests') {
+  steps {
+    bat 'npm test -- --watchAll=false'
+  }
+}
   }
 }
