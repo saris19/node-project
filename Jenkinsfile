@@ -40,10 +40,5 @@ pipeline {
         bat 'npm run build'
       }
     }
-    stage('Deploy to Vercel') {
-      steps {
-       bat '"C:\\Program Files\\nodejs\\npx.cmd" vercel --prod --token %VERCEL_TOKEN%'
-      }
-    }
   }
 }
