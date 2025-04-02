@@ -9,7 +9,12 @@ pipeline {
   stages {
     stage('Clean workspace') {
       steps {
-        deleteDir() // Limpia el workspace
+        deleteDir()
+      }
+    }
+    stage('Checkout') {
+      steps {
+        checkout scm
       }
     }
     stage('Install dependencies') {
