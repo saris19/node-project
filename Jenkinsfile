@@ -42,7 +42,7 @@ pipeline {
     }
     stage('Deploy to Vercel') {
       steps {
-        bat "npx vercel --prod --token %VERCEL_TOKEN%"
+       bat 'C:\\Program Files\\nodejs\\npx.cmd vercel --prod --token %VERCEL_TOKEN%'
       }
     }
   }
