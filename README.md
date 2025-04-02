@@ -11,8 +11,7 @@ El proyecto cuenta con un pipeline de Integración Continua y Entrega Continua (
 
 - Instalación de dependencias.
 - Ejecución de pruebas unitarias automáticas.
-- Despliegue automático en **Vercel**.
-- Notificación por correo al finalizar la ejecución (éxito o fallo).
+
 
 ## 🚀 Demo en producción
 
@@ -115,27 +114,6 @@ pipeline {
       }
     }
 
-    stage('Deploy to Vercel') {
-      steps {
-        bat 'npx vercel --token=%VERCEL_TOKEN% --prod --yes'
-      }
-    }
-  }
-
-  post {
-    success {
-      echo '✅ Pipeline exitoso'
-      mail to: 'tucorreo@dominio.com',
-           subject: 'Pipeline exitoso',
-           body: "El pipeline se completó exitosamente y fue desplegado en Vercel."
-    }
-    failure {
-      echo '❌ Pipeline falló'
-      mail to: 'tucorreo@dominio.com',
-           subject: 'Pipeline fallido',
-           body: "El pipeline falló en alguna de las etapas. Por favor revisar Jenkins."
-    }
-  }
 }
 ```
 
@@ -146,9 +124,7 @@ pipeline {
 - Token de acceso en Vercel.
 - Jenkins configurado con:
   - NodeJS 20.
-  - Plugin de Email.
-  - Credential global `vercel-token`.
-  - Configuración de correo SMTP.
+
 
 ---
 
