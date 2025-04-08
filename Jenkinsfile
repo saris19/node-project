@@ -1,52 +1,66 @@
 pipeline {
-  agent any // Utiliza cualquier agente disponible para ejecutar el pipeline
+  agent any
 
   environment {
-    CI = "false" // Evita que React detenga el proceso por advertencias
+    CI = "false" // Desactiva que React trate los warnings como errores
+    VERCEL_TOKEN = credentials('vercel-token') // Token (si se usa despliegue, si no, puedes quitarlo)
   }
 
   stages {
-
-    stage('Declarativo: Obtener código fuente repositorio (SCM)') {
+    stage('Declarative: Checkout SCM') {
       steps {
-        checkout scm // Utiliza la configuración de repositorio integrada en Jenkins
+        checkout scm
       }
     }
 
-    stage('Instalar herramientas') {
+    stage('Tool Install') {
       steps {
-        tool name: 'Node 20', type: 'nodejs' // Carga la versión 20 de Node.js configurada en Jenkins
+        tool name: 'Node 20', type: 'nodejs'
       }
     }
 
-    stage('Limpiar espacio de trabajo') {
+    stage('Clean workspace') {
       steps {
-        deleteDir() // Elimina archivos del build anterior
+        deleteDir()
       }
     }
 
-    stage('Clonar repositorio') {
+    stage('Checkout') {
       steps {
         git url: 'https://github.com/guswill24/node-project.git', branch: 'main'
       }
     }
 
-    stage('Instalar dependencias') {
+    stage('Install dependencies') {
       steps {
-        bat 'npm install --legacy-peer-deps' // Instala paquetes necesarios usando npm
+        bat 'npm install --legacy-peer-deps'
       }
     }
 
-    stage('Ejecutar pruebas') {
+    stage('Run tests') {
       steps {
-        bat 'npm test -- --watchAll=false' // Ejecuta pruebas automatizadas una sola vez
+        bat 'npm test -- --watchAll=false'
       }
     }
 
-    stage('Construir la aplicación') {
+    stage('Build app') {
       steps {
-        bat 'npm run build' // Genera versión lista para producción
+        bat 'npm run build'
       }
+    }
+  }
+
+  post {
+    success {
+      echo "✅ Pipeline ejecutado correctamente. Build exitoso."
+    }
+
+    failure {
+      echo "❌ Error en alguna etapa del pipeline. Revisar los logs."
+    }
+
+    always {
+      echo "📦 Pipeline finalizado (éxito o fallo). Puedes revisar el historial."
     }
   }
 }
