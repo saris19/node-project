@@ -3,49 +3,63 @@ pipeline {
 
   environment {
     CI = "false" // Desactiva que React trate los warnings como errores
-    VERCEL_TOKEN = credentials('vercel-token') // Token (si se usa despliegue, si no, puedes quitarlo)
+    VERCEL_TOKEN = credentials('vercel-token') // Token de acceso seguro para desplegar en Vercel
   }
 
   stages {
-    stage('Declarative: Checkout SCM') {
+    stage('Declarativo: Checkout SCM') {
       steps {
         checkout scm
       }
     }
 
-    stage('Tool Install') {
+    stage('Instalar herramientas') {
       steps {
         tool name: 'Node 20', type: 'nodejs'
       }
     }
 
-    stage('Clean workspace') {
+    stage('Limpiar espacio de trabajo') {
       steps {
         deleteDir()
       }
     }
 
-    stage('Checkout') {
+    stage('Clonar repositorio') {
       steps {
         git url: 'https://github.com/guswill24/node-project.git', branch: 'main'
       }
     }
 
-    stage('Install dependencies') {
+    stage('Instalar dependencias') {
       steps {
         bat 'npm install --legacy-peer-deps'
       }
     }
 
-    stage('Run tests') {
+    stage('Ejecutar pruebas') {
       steps {
         bat 'npm test -- --watchAll=false'
       }
     }
 
-    stage('Build app') {
+    stage('Construir aplicación') {
       steps {
         bat 'npm run build'
+      }
+    }
+
+    stage('Instalar CLI de Vercel') {
+      steps {
+        bat 'npm install -g vercel'
+      }
+    }
+
+    stage('Desplegar en Vercel') {
+      steps {
+        withCredentials([string(credentialsId: 'vercel-token', variable: 'VERCEL_TOKEN')]) {
+          bat 'vercel --prod --token %VERCEL_TOKEN% --yes'
+        }
       }
     }
   }
