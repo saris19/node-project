@@ -1,43 +1,51 @@
 pipeline {
-  agent any
+  agent any // Utiliza cualquier agente disponible para ejecutar el pipeline
+
   environment {
-    CI = "false" // Desactiva que React trate los warnings como errores
-    VERCEL_TOKEN = credentials('vercel-token')
+    CI = "false" // Evita que React detenga el proceso por advertencias
   }
+
   stages {
-    stage('Declarative: Checkout SCM') {
+
+    stage('Declarativo: Obtener código fuente repositorio (SCM)') {
       steps {
-        checkout scm
+        checkout scm // Utiliza la configuración de repositorio integrada en Jenkins
       }
     }
-    stage('Tool Install') {
+
+    stage('Instalar herramientas') {
       steps {
-       tool name: 'Node 20', type: 'nodejs'
+        tool name: 'Node 20', type: 'nodejs' // Carga la versión 20 de Node.js configurada en Jenkins
       }
     }
-    stage('Clean workspace') {
+
+    stage('Limpiar espacio de trabajo') {
       steps {
-        deleteDir()
+        deleteDir() // Elimina archivos del build anterior
       }
     }
-    stage('Checkout') {
+
+    stage('Clonar repositorio') {
       steps {
         git url: 'https://github.com/guswill24/node-project.git', branch: 'main'
       }
     }
-    stage('Install dependencies') {
+
+    stage('Instalar dependencias') {
       steps {
-        bat 'npm install --legacy-peer-deps'
+        bat 'npm install --legacy-peer-deps' // Instala paquetes necesarios usando npm
       }
     }
-    stage('Run tests') {
+
+    stage('Ejecutar pruebas') {
       steps {
-        bat 'npm test -- --watchAll=false'
+        bat 'npm test -- --watchAll=false' // Ejecuta pruebas automatizadas una sola vez
       }
     }
-    stage('Build app') {
+
+    stage('Construir la aplicación') {
       steps {
-        bat 'npm run build'
+        bat 'npm run build' // Genera versión lista para producción
       }
     }
   }
